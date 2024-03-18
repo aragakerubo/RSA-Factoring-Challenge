@@ -1,11 +1,55 @@
-#!/usr/bin/python3
+# Description: This program reads a file with a list of numbers and prints the prime factors of each number.
+
+import math
+import sys
 
 
-from fractions import gcd
-from sys import argv
+def is_prime(n):
+    """
+    Return True if n is prime, False otherwise.
+
+    Args:
+        n -- int: number to check for primality
+
+    Returns:
+        bool: True if n is prime, False otherwise
+    """
+    if n == 2:
+        return True
+    if n < 2 or n % 2 == 0:
+        return False
+    for i in range(3, math.isqrt(n) + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+
+def gcd(a, b):
+    """
+    Return the greatest common divisor of a and b.
+
+    Args:
+        a -- int: first number
+        b -- int: second number
+
+    Returns:
+        int: greatest common divisor of a and b
+    """
+    while b != 0:
+        a, b = b, a % b
+    return a
 
 
 def pollards_rho(n):
+    """
+    Return a non-trivial factor of n.
+
+    Args:
+        n -- int: number to factor
+
+    Returns:
+        int: a non-trivial factor of n
+    """
     x = 2
     y = 2
     d = 1
@@ -19,7 +63,7 @@ def pollards_rho(n):
 
 
 def read_file():
-    with open(argv[1]) as f:
+    with open(sys.argv[1]) as f:
         for number in f:
             num = int(number)
             if num % 2 == 0:
